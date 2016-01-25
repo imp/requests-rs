@@ -19,9 +19,10 @@ impl Response {
             status_code = sc;
             reason = r.to_string();
         }
+        let url = raw.url.serialize();
         Response {
             raw: raw,
-            url: "".to_string(),
+            url: url,
             status_code: status_code,
             reason: reason,
         }
