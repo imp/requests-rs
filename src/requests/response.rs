@@ -4,10 +4,10 @@ pub type HyperResponse = hyper::client::response::Response;
 
 #[derive(Debug)]
 pub struct Response {
-    raw: HyperResponse,
     pub url: String,
     pub status_code: u16,
     pub reason: String,
+    raw: HyperResponse,
 }
 
 impl Response {
@@ -19,12 +19,11 @@ impl Response {
             status_code = sc;
             reason = r.to_string();
         }
-        let url = raw.url.serialize();
         Response {
-            raw: raw,
-            url: url,
+            url: raw.url.serialize(),
             status_code: status_code,
             reason: reason,
+            raw: raw,
         }
     }
 }
