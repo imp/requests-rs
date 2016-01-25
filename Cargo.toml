@@ -7,3 +7,4 @@ repository = "https://github.com/imp/requests-rs.git"
 version = "0.0.0"
 
 [dependencies]
+hyper = "0.7.2"
