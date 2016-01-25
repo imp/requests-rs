@@ -8,35 +8,45 @@ mod test {
 
     #[test]
     fn test_get() {
-        let res = requests::get("http://httpbin.org/get").unwrap();
+        const URL: &'static str = "http://httpbin.org/get";
+        let res = requests::get(URL).unwrap();
+        assert_eq!(res.url, URL);
         assert_eq!(res.status_code, 200);
         assert_eq!(res.reason, "OK");
     }
 
     #[test]
     fn test_post() {
-        let res = requests::post("http://httpbin.org/post").unwrap();
+        const URL: &'static str = "http://httpbin.org/post";
+        let res = requests::post(URL).unwrap();
+        assert_eq!(res.url, URL);
         assert_eq!(res.status_code, 200);
         assert_eq!(res.reason, "OK");
     }
 
     #[test]
     fn test_put() {
-        let res = requests::put("http://httpbin.org/put").unwrap();
+        const URL: &'static str = "http://httpbin.org/put";
+        let res = requests::put(URL).unwrap();
+        assert_eq!(res.url, URL);
         assert_eq!(res.status_code, 200);
         assert_eq!(res.reason, "OK");
     }
 
     #[test]
     fn test_head() {
-        let res = requests::head("http://httpbin.org/get").unwrap();
+        const URL: &'static str = "http://httpbin.org/get";
+        let res = requests::head(URL).unwrap();
+        assert_eq!(res.url, URL);
         assert_eq!(res.status_code, 200);
         assert_eq!(res.reason, "OK");
     }
 
     #[test]
     fn test_detele() {
-        let res = requests::delete("http://httpbin.org/delete").unwrap();
+        const URL: &'static str = "http://httpbin.org/delete";
+        let res = requests::delete(URL).unwrap();
+        assert_eq!(res.url, URL);
         assert_eq!(res.status_code, 200);
         assert_eq!(res.reason, "OK");
     }
