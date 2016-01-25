@@ -4,7 +4,7 @@ description = "Rust HTTP client library styled after awesome Python requests - [
 license = "MIT"
 name = "requests"
 repository = "https://github.com/imp/requests-rs.git"
-version = "0.0.0"
+version = "0.0.1"
 
 [dependencies]
 hyper = "0.7.2"
