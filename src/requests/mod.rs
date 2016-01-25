@@ -5,4 +5,4 @@ use hyper;
 
 pub type Result<T> = hyper::error::Result<T>;
 
-pub use self::request::{get, post};
+pub use self::request::*;

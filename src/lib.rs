@@ -18,4 +18,22 @@ mod test {
         let res = requests::post("http://httpbin.org/post").unwrap();
         assert_eq!(res.status, hyper::Ok);
     }
+
+    #[test]
+    fn test_put() {
+        let res = requests::put("http://httpbin.org/put").unwrap();
+        assert_eq!(res.status, hyper::Ok);
+    }
+
+    #[test]
+    fn test_head() {
+        let res = requests::head("http://httpbin.org/get").unwrap();
+        assert_eq!(res.status, hyper::Ok);
+    }
+
+    #[test]
+    fn test_detele() {
+        let res = requests::delete("http://httpbin.org/delete").unwrap();
+        assert_eq!(res.status, hyper::Ok);
+    }
 }
