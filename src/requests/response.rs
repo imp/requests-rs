@@ -7,6 +7,7 @@ pub struct Response {
     pub url: String,
     pub status_code: u16,
     pub reason: String,
+    pub ok: bool,
     raw: HyperResponse,
 }
 
@@ -23,6 +24,7 @@ impl Response {
             url: raw.url.serialize(),
             status_code: status_code,
             reason: reason,
+            ok: status_code == 200,
             raw: raw,
         }
     }
