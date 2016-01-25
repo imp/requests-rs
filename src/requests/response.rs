@@ -8,6 +8,7 @@ pub struct Response {
     pub status_code: u16,
     pub reason: String,
     pub ok: bool,
+    pub content: Vec<u8>,
     raw: HyperResponse,
 }
 
@@ -25,6 +26,7 @@ impl Response {
             status_code: status_code,
             reason: reason,
             ok: status_code == 200,
+            content: vec![],
             raw: raw,
         }
     }
