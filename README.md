@@ -2,8 +2,9 @@
 Rust HTTP client library styled after awesome Python requests
 
 Build status
- branch | status | status |
-:-------|:------:|:------:|
+
+ branch | status
+:-------|:------:
   master| [![Build Status](https://travis-ci.org/imp/requests-rs.svg?branch=master)](https://travis-ci.org/imp/requests-rs)
  develop| [![Build Status](https://travis-ci.org/imp/requests-rs.svg?branch=develop)](https://travis-ci.org/imp/requests-rs)
 
