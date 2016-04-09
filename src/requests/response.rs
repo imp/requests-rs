@@ -1,39 +1,55 @@
 use std::io::Read;
 use std::convert::From;
-use hyper;
+use std::str;
+use hyper::client::response;
+use hyper::header::ContentLength;
+use hyper::status::StatusCode;
 
-pub type HyperResponse = hyper::client::response::Response;
+pub type HyperResponse = response::Response;
 
 #[derive(Debug)]
-pub struct Response(hyper::client::response::Response);
+pub struct Response {
+    content: Vec<u8>,
+    hr: HyperResponse,
+}
 
-impl From<hyper::client::response::Response> for Response {
-    fn from(raw: hyper::client::response::Response) -> Self {
-        Response(raw)
+impl From<HyperResponse> for Response {
+    fn from(mut raw: HyperResponse) -> Self {
+        let mut content = match raw.headers.get::<ContentLength>() {
+            Some(&ContentLength(length)) => Vec::with_capacity(length as usize),
+            None => Vec::new(),
+        };
+
+        if raw.read_to_end(&mut content).is_err() {
+            content = Vec::new()
+        }
+
+        Response {
+            content: content,
+            hr: raw,
+        }
     }
 }
 
-impl Response {
+impl<'a> Response {
     pub fn url(&self) -> String {
-        self.0.url.serialize()
+        self.hr.url.serialize()
     }
 
-    pub fn status_code(&self) -> hyper::status::StatusCode {
-        self.0.status
+    pub fn status_code(&self) -> StatusCode {
+        self.hr.status
     }
 
     pub fn reason(&self) -> String {
-        self.0.status.canonical_reason().unwrap_or("UNAVAILABLE").to_owned()
+        self.hr.status.canonical_reason().unwrap_or("UNAVAILABLE").to_owned()
     }
 
     pub fn ok(&self) -> bool {
-        self.0.status == hyper::status::StatusCode::Ok
+        self.hr.status == StatusCode::Ok
     }
 
-    pub fn text(&mut self) -> String {
-        let mut text = String::new();
-        self.0.read_to_string(&mut text);
-        text
+    pub fn text(&'a self) -> Option<&'a str> {
+        str::from_utf8(&self.content).ok()
     }
 
     pub fn json(&self) -> bool {
