@@ -8,7 +8,7 @@ mod test {
     use hyper::status::StatusCode;
 
     #[test]
-    fn test_get() {
+    fn get() {
         const URL: &'static str = "http://httpbin.org/get";
         let res = requests::get(URL).unwrap();
         assert_eq!(res.url(), URL);
@@ -17,7 +17,7 @@ mod test {
     }
 
     #[test]
-    fn test_post() {
+    fn post() {
         const URL: &'static str = "http://httpbin.org/post";
         let res = requests::post(URL).unwrap();
         assert_eq!(res.url(), URL);
@@ -26,7 +26,7 @@ mod test {
     }
 
     #[test]
-    fn test_put() {
+    fn put() {
         const URL: &'static str = "http://httpbin.org/put";
         let res = requests::put(URL).unwrap();
         assert_eq!(res.url(), URL);
@@ -35,7 +35,7 @@ mod test {
     }
 
     #[test]
-    fn test_head() {
+    fn head() {
         const URL: &'static str = "http://httpbin.org/get";
         let res = requests::head(URL).unwrap();
         assert_eq!(res.url(), URL);
@@ -44,7 +44,7 @@ mod test {
     }
 
     #[test]
-    fn test_delete() {
+    fn delete() {
         const URL: &'static str = "http://httpbin.org/delete";
         let res = requests::delete(URL).unwrap();
         assert_eq!(res.url(), URL);
@@ -53,7 +53,7 @@ mod test {
     }
 
     #[test]
-    fn test_user_agent() {
+    fn user_agent() {
         const URL: &'static str = "http://httpbin.org/user-agent";
         let res = requests::get(URL).unwrap();
         println!("{:?}", res.text());
