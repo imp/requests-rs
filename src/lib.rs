@@ -57,6 +57,9 @@ mod test {
         const URL: &'static str = "http://httpbin.org/user-agent";
         let res = requests::get(URL).unwrap();
         println!("{:?}", res.text());
-        assert_eq!(res.reason(), "Ok");
+        assert_eq!(res.url(), URL);
+        assert_eq!(res.status_code(), StatusCode::Ok);
+        assert_eq!(res.reason(), "OK");
+        assert_eq!(res.text(), Some("{\n  \"user-agent\": \"requests-rs/0.0.0\"\n}\n"));
     }
 }
