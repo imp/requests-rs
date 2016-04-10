@@ -3,6 +3,6 @@ mod response;
 
 use hyper;
 
-pub type Result<T> = hyper::error::Result<T>;
+pub type Result<T> = hyper::Result<T>;
 
 pub use self::request::*;
