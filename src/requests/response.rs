@@ -1,12 +1,12 @@
 use std::io::Read;
 use std::convert::From;
 use std::str;
-use hyper::client::response;
+use hyper::client;
 use hyper::header::{ContentLength, ContentType};
 use hyper::mime::{Mime, TopLevel, SubLevel};
 use hyper::status::StatusCode;
 
-pub type HyperResponse = response::Response;
+pub type HyperResponse = client::Response;
 
 #[derive(Debug)]
 pub struct Response {
