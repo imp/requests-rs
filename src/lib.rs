@@ -51,4 +51,12 @@ mod test {
         assert_eq!(res.status_code(), StatusCode::Ok);
         assert_eq!(res.reason(), "OK");
     }
+
+    #[test]
+    fn test_user_agent() {
+        const URL: &'static str = "http://httpbin.org/user-agent";
+        let res = requests::get(URL).unwrap();
+        println!("{:?}", res.text());
+        assert_eq!(res.reason(), "Ok");
+    }
 }
