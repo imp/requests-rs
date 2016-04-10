@@ -2,7 +2,8 @@ use std::io::Read;
 use std::convert::From;
 use std::str;
 use hyper::client::response;
-use hyper::header::ContentLength;
+use hyper::header::{ContentLength, ContentType};
+use hyper::mime::{Mime, TopLevel, SubLevel};
 use hyper::status::StatusCode;
 
 pub type HyperResponse = response::Response;
@@ -52,7 +53,18 @@ impl<'a> Response {
         str::from_utf8(&self.content).ok()
     }
 
-    pub fn json(&self) -> bool {
-        unimplemented!();
+    pub fn json(&self) -> Option<String> {
+        if self.is_json() {
+            self.text().map(|x| x.to_owned())
+        } else {
+            None
+        }
+    }
+
+    fn is_json(&self) -> bool {
+        match self.hr.headers.get::<ContentType>() {
+            Some(&ContentType(Mime(TopLevel::Application, SubLevel::Json, _))) => true,
+            _ => false,
+        }
     }
 }
