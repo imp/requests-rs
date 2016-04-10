@@ -44,7 +44,7 @@ mod test {
     }
 
     #[test]
-    fn test_detele() {
+    fn test_delete() {
         const URL: &'static str = "http://httpbin.org/delete";
         let res = requests::delete(URL).unwrap();
         assert_eq!(res.url(), URL);
