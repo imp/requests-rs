@@ -11,7 +11,25 @@ pub mod requests;
 mod test {
     use super::requests;
     use hyper;
-    use serde::Deserialize;
+
+    #[derive(Debug, Deserialize)]
+    struct Args;
+
+    #[derive(Debug, Deserialize)]
+    struct Headers {
+        #[serde(rename="Host")]
+        host: String,
+        #[serde(rename="User-Agent")]
+        user_agent: String,
+    }
+
+    #[derive(Debug, Deserialize)]
+    struct HttpBinData {
+        // args: Args,
+        headers: Headers,
+        origin: String,
+        url: String,
+    }
 
     #[test]
     fn get() {
@@ -20,6 +38,10 @@ mod test {
         assert_eq!(res.url(), URL);
         assert_eq!(res.status_code(), hyper::Ok);
         assert_eq!(res.reason(), "OK");
+        let data: HttpBinData = res.from_json().unwrap();
+        assert_eq!(data.url, URL);
+        assert_eq!(data.headers.host, "httpbin.org");
+        assert_eq!(data.headers.user_agent, concat!("requests-rs/", env!("CARGO_PKG_VERSION")));
     }
 
     #[test]
