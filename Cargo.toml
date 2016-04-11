@@ -11,3 +11,10 @@ version = "0.0.5"
 hyper = "0.8.0"
 serde = "0.7.0"
 serde_json = "0.7.0"
+
+[dependencies.clippy]
+optional = true
+version = "0.0.63"
+
+[features]
+default = []
