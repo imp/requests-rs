@@ -113,4 +113,32 @@ mod test {
         let ua: UserAgent = res.from_json().unwrap();
         assert_eq!(ua.user_agent, concat!("requests-rs/", env!("CARGO_PKG_VERSION")));
     }
+
+    use std::collections::HashMap;
+
+    #[derive(Deserialize, Debug)]
+    struct GenericResponse {
+        args: HashMap<String, String>,
+        data: Option<String>,
+        files: Option<HashMap<String, String>>,
+        form: Option<HashMap<String, String>>,
+        headers: HashMap<String, String>,
+        json: Option<String>,
+        origin: String,
+        url: String,
+    }
+
+    #[test]
+    fn generic_get() {
+        const URL: &'static str = "http://httpbin.org/get";
+        let res = get(URL).unwrap();
+        assert!(res.is_json());
+
+        println!("{}", res.text().unwrap());
+        let out = res.from_json::<GenericResponse>().unwrap();
+        println!("{:#?}", out);
+
+        assert_eq!(out.json, None);
+        assert_eq!(out.url, "http://httpbin.org/get");
+    }
 }
