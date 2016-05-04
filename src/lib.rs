@@ -9,7 +9,7 @@ pub mod request;
 pub mod response;
 pub use request::{get, post, put, head, delete};
 
-pub type Result<T> = hyper::Result<T>;
+pub type RequestsResult = hyper::Result<response::Response>;
 
 #[cfg(test)]
 mod test {
