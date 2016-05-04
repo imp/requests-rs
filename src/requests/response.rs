@@ -43,8 +43,8 @@ impl<'a> Response {
         self.hr.status
     }
 
-    pub fn reason(&self) -> String {
-        self.hr.status.canonical_reason().unwrap_or("UNAVAILABLE").to_owned()
+    pub fn reason(&self) -> &str {
+        self.hr.status.canonical_reason().unwrap_or("UNAVAILABLE")
     }
 
     pub fn ok(&self) -> bool {
