@@ -6,10 +6,11 @@ extern crate serde_json;
 extern crate hyper;
 
 pub mod requests;
+pub use requests::{get, post, put, head, delete};
 
 #[cfg(test)]
 mod test {
-    use super::requests;
+    use super::*;
     use hyper;
 
     #[derive(Debug, Deserialize)]
@@ -32,9 +33,9 @@ mod test {
     }
 
     #[test]
-    fn get() {
+    fn simple_get() {
         const URL: &'static str = "http://httpbin.org/get";
-        let res = requests::get(URL).unwrap();
+        let res = get(URL).unwrap();
         assert_eq!(res.url(), URL);
         assert_eq!(res.status_code(), hyper::Ok);
         assert_eq!(res.reason(), "OK");
@@ -45,36 +46,36 @@ mod test {
     }
 
     #[test]
-    fn post() {
+    fn simple_post() {
         const URL: &'static str = "http://httpbin.org/post";
-        let res = requests::post(URL).unwrap();
+        let res = post(URL).unwrap();
         assert_eq!(res.url(), URL);
         assert_eq!(res.status_code(), hyper::Ok);
         assert_eq!(res.reason(), "OK");
     }
 
     #[test]
-    fn put() {
+    fn simple_put() {
         const URL: &'static str = "http://httpbin.org/put";
-        let res = requests::put(URL).unwrap();
+        let res = put(URL).unwrap();
         assert_eq!(res.url(), URL);
         assert_eq!(res.status_code(), hyper::Ok);
         assert_eq!(res.reason(), "OK");
     }
 
     #[test]
-    fn head() {
+    fn simple_head() {
         const URL: &'static str = "http://httpbin.org/get";
-        let res = requests::head(URL).unwrap();
+        let res = head(URL).unwrap();
         assert_eq!(res.url(), URL);
         assert_eq!(res.status_code(), hyper::Ok);
         assert_eq!(res.reason(), "OK");
     }
 
     #[test]
-    fn delete() {
+    fn simple_delete() {
         const URL: &'static str = "http://httpbin.org/delete";
-        let res = requests::delete(URL).unwrap();
+        let res = delete(URL).unwrap();
         assert_eq!(res.url(), URL);
         assert_eq!(res.status_code(), hyper::Ok);
         assert_eq!(res.reason(), "OK");
