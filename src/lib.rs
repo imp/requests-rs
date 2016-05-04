@@ -5,8 +5,11 @@ extern crate serde;
 extern crate serde_json;
 extern crate hyper;
 
-pub mod requests;
-pub use requests::{get, post, put, head, delete};
+pub mod request;
+pub mod response;
+pub use request::{get, post, put, head, delete};
+
+pub type Result<T> = hyper::Result<T>;
 
 #[cfg(test)]
 mod test {
@@ -87,7 +90,7 @@ mod test {
                                 env!("CARGO_PKG_VERSION"),
                                 "\"\n}\n");
         const URL: &'static str = "http://httpbin.org/user-agent";
-        let res = requests::get(URL).unwrap();
+        let res = get(URL).unwrap();
         assert_eq!(res.url(), URL);
         assert_eq!(res.status_code(), hyper::Ok);
         assert_eq!(res.reason(), "OK");
@@ -104,7 +107,7 @@ mod test {
         }
 
         const URL: &'static str = "http://httpbin.org/user-agent";
-        let res = requests::get(URL).unwrap();
+        let res = get(URL).unwrap();
         assert!(res.is_json());
 
         let ua: UserAgent = res.from_json().unwrap();
