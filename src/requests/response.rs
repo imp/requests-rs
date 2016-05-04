@@ -35,8 +35,8 @@ impl From<HyperResponse> for Response {
 }
 
 impl<'a> Response {
-    pub fn url(&self) -> String {
-        self.hr.url.serialize()
+    pub fn url(&self) -> &str {
+        self.hr.url.as_str()
     }
 
     pub fn status_code(&self) -> StatusCode {
