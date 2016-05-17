@@ -16,7 +16,7 @@ serde_macros = "0.7.4"
 
 [dependencies.clippy]
 optional = true
-version = "0.0.64"
+version = "0.0.*"
 
 [features]
 default = []
