@@ -5,6 +5,7 @@ keywords = ["http", "client", "python", "requests"]
 license = "MIT"
 name = "requests"
 repository = "https://github.com/imp/requests-rs.git"
+homepage = "https://github.com/imp/requests-rs"
 version = "0.0.10"
 
 [dependencies]
