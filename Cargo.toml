@@ -14,9 +14,5 @@ serde = "0.7.5"
 serde_json = "0.7.0"
 serde_macros = "0.7.5"
 
-[dependencies.clippy]
-optional = true
-version = "0.0.*"
-
-[features]
-default = []
+[dev-dependencies]
+clippy = "0.0.*"
