@@ -1,6 +1,6 @@
 use hyper;
 use hyper::header::UserAgent;
-use super::response::Response;
+use super::Response;
 use super::RequestsResult;
 
 const DEFAULT_USER_AGENT: &'static str = concat!("requests-rs/", env!("CARGO_PKG_VERSION"));

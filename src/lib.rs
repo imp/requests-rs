@@ -7,9 +7,11 @@ extern crate hyper;
 
 pub mod request;
 pub mod response;
-pub use request::{get, post, put, head, delete};
 
-pub type RequestsResult = hyper::Result<response::Response>;
+pub use request::{get, post, put, head, delete};
+pub use response::Response;
+
+pub type RequestsResult = hyper::Result<Response>;
 
 #[cfg(test)]
 mod test {
