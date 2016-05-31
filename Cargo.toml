@@ -10,8 +10,8 @@ version = "0.0.10"
 
 [dependencies]
 hyper = "0.9.6"
-serde = "0.7.5"
-serde_json = "0.7.0"
+serde = "0.7.6"
+serde_json = "0.7.1"
 serde_macros = "0.7.5"
 
 [dev-dependencies]
