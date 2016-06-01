@@ -2,11 +2,17 @@ language: rust
 rust:
     - stable
     - beta
-    - nightly
-      env: FEATURES="--no-default-features --features nightly ssl"
+    #- nightly
 os:
     - osx
     - linux
 
+matrix:
+    fast_finish: true
+    include:
+    - rust: nightly
+      env: FEATURES="--no-default-features --features nightly ssl"
+
 script:
+    - cargo build --verbose $FEATURES
     - cargo test --verbose $FEATURES
