@@ -3,6 +3,10 @@ rust:
     - stable
     - beta
     - nightly
+      env: FEATURES="--no-default-features --features nightly ssl"
 os:
     - osx
     - linux
+
+script:
+    - cargo test --verbose $FEATURES
