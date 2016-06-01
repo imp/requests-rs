@@ -9,17 +9,23 @@ homepage = "https://github.com/imp/requests-rs"
 version = "0.0.11"
 
 [dependencies]
-serde = "0.7.6"
-serde_json = "0.7.1"
-serde_macros = "0.7.5"
+serde = "0.7"
+serde_json = "0.7"
+serde_macros = { version = "0.7", optional = true }
 
 [dependencies.hyper]
 version = "0.9"
 default-features = false
 
 [features]
-default = ["ssl"]
+default = ["ssl", "stable"]
 ssl = ["hyper/ssl"]
+stable = ["serde_codegen"]
+nightly = ["serde_macros"]
+
+[build-dependencies]
+serde_codegen = { version = "0.7", optional = true }
+syntex = "0.*"
 
 [dependencies.clippy]
 version = "0.0.*"
