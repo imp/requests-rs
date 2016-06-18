@@ -2,18 +2,8 @@ language: rust
 rust:
     - stable
     - beta
-    #- nightly
-
-matrix:
-    fast_finish: true
-    include:
-    - rust: nightly
-      env: FEATURES="--no-default-features --features 'nightly ssl'"
+    - nightly
 
 os:
     - osx
     - linux
-
-script:
-    - cargo build --verbose ${FEATURES}
-    - 'if [ $TRAVIS_RUST_VERSION = nightly ]; then cargo test --verbose ${FEATURES}; fi'
