@@ -5,8 +5,7 @@ use hyper::client;
 use hyper::header::{ContentLength, ContentType};
 use hyper::mime::{Mime, TopLevel, SubLevel};
 use hyper::status::StatusCode;
-use serde::Deserialize;
-use serde_json;
+use json;
 
 pub type HyperResponse = client::Response;
 
@@ -55,16 +54,8 @@ impl<'a> Response {
         str::from_utf8(&self.content).ok()
     }
 
-    pub fn json(&self) -> Option<String> {
-        if self.is_json() {
-            self.text().map(|x| x.to_owned())
-        } else {
-            None
-        }
-    }
-
-    pub fn from_json<T>(&self) -> Option<T> where T: Deserialize {
-        self.text().and_then(|t| serde_json::from_str::<T>(t).ok())
+    pub fn json(&self) -> json::JsonResult<json::JsonValue> {
+        self.text().map(|t| json::parse(t)).unwrap()
     }
 
     pub fn is_json(&self) -> bool {
