@@ -25,7 +25,8 @@ mod test {
         println!("{:?}", data);
         assert!(data["url"].is(URL));
         assert!(data["headers"]["Host"].is("httpbin.org"));
-        assert!(data["headers"]["User-Agent"].is(concat!("requests-rs/", env!("CARGO_PKG_VERSION"))));
+        assert!(data["headers"]["User-Agent"]
+            .is(concat!("requests-rs/", env!("CARGO_PKG_VERSION"))));
     }
 
     #[test]
