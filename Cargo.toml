@@ -9,7 +9,7 @@ homepage = "https://github.com/imp/requests-rs"
 version = "0.0.13"
 
 [dependencies]
-json = "0.4"
+json = "0.5"
 
 [dependencies.hyper]
 version = "0.9"
