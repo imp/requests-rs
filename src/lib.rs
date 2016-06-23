@@ -23,10 +23,10 @@ mod test {
         assert_eq!(res.reason(), "OK");
         let data = res.json().unwrap();
         println!("{:?}", data);
-        assert!(data["url"].is(URL));
-        assert!(data["headers"]["Host"].is("httpbin.org"));
-        assert!(data["headers"]["User-Agent"]
-            .is(concat!("requests-rs/", env!("CARGO_PKG_VERSION"))));
+        assert_eq!(data["url"], URL);
+        assert_eq!(data["headers"]["Host"], "httpbin.org");
+        assert_eq!(data["headers"]["User-Agent"],
+            concat!("requests-rs/", env!("CARGO_PKG_VERSION")));
     }
 
     #[test]
@@ -86,6 +86,6 @@ mod test {
         assert!(res.is_json());
 
         let ua = res.json().unwrap();
-        assert!(ua["user-agent"].is(concat!("requests-rs/", env!("CARGO_PKG_VERSION"))));
+        assert_eq!(ua["user-agent"], concat!("requests-rs/", env!("CARGO_PKG_VERSION")));
     }
 }
