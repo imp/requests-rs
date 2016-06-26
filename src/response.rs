@@ -54,6 +54,10 @@ impl<'a> Response {
         str::from_utf8(&self.content).ok()
     }
 
+    pub fn content(&'a self) -> &'a Vec<u8> {
+        &self.content
+    }
+
     pub fn json(&self) -> json::JsonResult<json::JsonValue> {
         self.text().map(|t| json::parse(t)).unwrap()
     }
