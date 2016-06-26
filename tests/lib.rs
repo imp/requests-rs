@@ -98,6 +98,7 @@ macro_rules! status_code_test {
         $(#[test]
         fn $name() {
             let res = get(&format!("http://httpbin.org/status/{}", $numeric)).unwrap();
+            println!("{}", res.text().unwrap());
             assert_eq!(res.status_code(), hyper::status::StatusCode::from_u16($numeric));
         })+
     }
