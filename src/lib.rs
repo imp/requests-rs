@@ -7,5 +7,5 @@ pub mod response;
 pub use request::{get, post, put, head, delete};
 pub use response::Response;
 
-pub type RequestsResult = hyper::Result<Response>;
-pub type RequestsError = hyper::error::Error;
+pub type Result = hyper::Result<Response>;
+pub type Error = hyper::error::Error;
