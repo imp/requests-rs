@@ -1,41 +1,32 @@
-image: ubuntu:xenial
-
-before_script:
-  - apt-get update
-  - apt-get -y install sudo curl git file g++ cmake libssl-dev
-  - echo Installing Rust from $CI_BUILD_NAME channel
-  - curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain $CI_BUILD_NAME
-  - . ~/.cargo/env && rustc -V && cargo -V
-
 stages:
   - test
   - deploy
 
 stable:
+  image: rustdocker/rust:stable
   stage: test
   script:
     - cargo test --verbose --jobs 1 --release
 
 beta:
+  image: rustdocker/rust:beta
   stage: test
   script:
     - cargo test --verbose --jobs 1 --release
 
 nightly:
+  image: rustdocker/rust:nightly
   stage: test
   script:
     - cargo test --verbose --jobs 1 --release
 
 .pages:
-  before_script:
-    - apt-get update
-    - apt-get -y install sudo curl
-    - curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain stable
+  image: rustdocker/rust:stable
   stage: deploy
   only:
     - master
   script:
-    - . ~/.cargo/env && cargo doc
+    - cargo doc
     - rm -rf public
     - mkdir public
     - cp -R target/doc/* public
