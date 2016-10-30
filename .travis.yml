@@ -9,7 +9,9 @@ matrix:
         - os: osx
           env: OPENSSL_INCLUDE_DIR="$(brew --prefix openssl)/include" OPENSSL_LIB_DIR="$(brew --prefix openssl)/lib"
           rust: stable
-
-before_script:
-    - env
-    - if [[ $TRAVIS_OS_NAME == 'osx' ]]; then brew update; brew list; brew install openssl; fi
+        - os: osx
+          env: OPENSSL_INCLUDE_DIR="$(brew --prefix openssl)/include" OPENSSL_LIB_DIR="$(brew --prefix openssl)/lib"
+          rust: beta
+        - os: osx
+          env: OPENSSL_INCLUDE_DIR="$(brew --prefix openssl)/include" OPENSSL_LIB_DIR="$(brew --prefix openssl)/lib"
+          rust: nightly
