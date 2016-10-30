@@ -4,9 +4,11 @@ rust:
     - beta
     - nightly
 
-os:
-    - osx
-    - linux
+matrix:
+    include:
+        - os: linux
+        - os: osx
+          env: OPENSSL_INCLUDE_DIR=$(brew --prefix openssl)/include OPENSSL_LIB_DIR=$(brew --prefix openssl)/lib
 
-env:
-    - OPENSSL_INCLUDE_DIR=$(brew --prefix openssl)/include OPENSSL_LIB_DIR=$(brew --prefix openssl)/lib
+before_script:
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; brew install openssl; fi
