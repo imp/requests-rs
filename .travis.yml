@@ -8,6 +8,7 @@ matrix:
     include:
         - os: osx
           env: OPENSSL_INCLUDE_DIR=$(brew --prefix openssl)/include OPENSSL_LIB_DIR=$(brew --prefix openssl)/lib
+          rust: stable
 
 before_script:
     - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; brew install openssl; fi
