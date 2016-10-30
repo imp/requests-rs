@@ -11,5 +11,5 @@ matrix:
           rust: stable
 
 before_script:
-    - brew list
+    - env
     - if [[ $TRAVIS_OS_NAME == 'osx' ]]; then brew update; brew list; brew install openssl; fi
