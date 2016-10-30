@@ -6,7 +6,6 @@ rust:
 
 matrix:
     include:
-        - os: linux
         - os: osx
           env: OPENSSL_INCLUDE_DIR=$(brew --prefix openssl)/include OPENSSL_LIB_DIR=$(brew --prefix openssl)/lib
 
