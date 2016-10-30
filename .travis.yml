@@ -9,5 +9,4 @@ os:
     - linux
 
 env:
-    - OPENSSL_INCLUDE_DIR=`brew --prefix openssl`/include
-    - OPENSSL_LIB_DIR=`brew --prefix openssl`/lib
+    - OPENSSL_INCLUDE_DIR=`brew --prefix openssl`/include OPENSSL_LIB_DIR=`brew --prefix openssl`/lib
