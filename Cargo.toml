@@ -7,7 +7,7 @@ name = "requests"
 readme = "README.md"
 repository = "https://github.com/imp/requests-rs.git"
 homepage = "https://github.com/imp/requests-rs"
-version = "0.0.22"
+version = "0.0.23"
 
 [dependencies]
 json = "0.11"
