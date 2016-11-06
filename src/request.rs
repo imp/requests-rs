@@ -6,23 +6,23 @@ use super::Result;
 
 const DEFAULT_USER_AGENT: &'static str = concat!("requests-rs/", env!("CARGO_PKG_VERSION"));
 
-fn default_user_agent() -> UserAgent {
-    UserAgent(DEFAULT_USER_AGENT.to_owned())
-}
-
 pub struct Request {
     headers: Headers,
 }
 
 impl Default for Request {
     fn default() -> Self {
-        let mut headers = Headers::new();
-        headers.set(default_user_agent());
-        Request { headers: headers }
+        let mut request = Request::new();
+        request.user_agent(DEFAULT_USER_AGENT);
+        request
     }
 }
 
 impl Request {
+    pub fn new() -> Self {
+        Request { headers: Headers::new() }
+    }
+
     pub fn user_agent(&mut self, ua: &str) {
         self.headers.set(UserAgent(ua.to_owned()))
     }

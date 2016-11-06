@@ -2,6 +2,7 @@ extern crate hyper;
 extern crate json;
 extern crate requests;
 
+// use requests::Codes;
 use requests::{delete, get, head, post, put};
 use requests::Request;
 
@@ -73,7 +74,7 @@ fn user_agent() {
 fn custom_user_agent() {
     const UA: &'static str = concat!("requests-rs-tests/", env!("CARGO_PKG_VERSION"));
     const URL: &'static str = "http://httpbin.org/user-agent";
-    let mut request = Request::default();
+    let mut request = Request::new();
     request.user_agent(UA);
     let res = request.get(URL).unwrap();
     assert_eq!(res.url(), URL);

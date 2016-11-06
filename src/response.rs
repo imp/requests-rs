@@ -1,13 +1,13 @@
 use std::io::Read;
 use std::convert::From;
 use std::str;
-use hyper::client;
+use hyper;
 use hyper::header::{ContentLength, ContentType};
 use hyper::mime::{Mime, TopLevel, SubLevel};
-use hyper::status::StatusCode;
 use json;
 
-pub type HyperResponse = client::Response;
+pub type Codes = hyper::status::StatusCode;
+pub type HyperResponse = hyper::client::Response;
 
 #[derive(Debug)]
 pub struct Response {
@@ -38,7 +38,7 @@ impl<'a> Response {
         self.hr.url.as_str()
     }
 
-    pub fn status_code(&self) -> StatusCode {
+    pub fn status_code(&self) -> Codes {
         self.hr.status
     }
 
@@ -47,7 +47,7 @@ impl<'a> Response {
     }
 
     pub fn ok(&self) -> bool {
-        self.hr.status == StatusCode::Ok
+        self.hr.status == hyper::Ok
     }
 
     pub fn text(&'a self) -> Option<&'a str> {
