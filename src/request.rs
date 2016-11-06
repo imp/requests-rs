@@ -23,6 +23,10 @@ impl Default for Request {
 }
 
 impl Request {
+    pub fn user_agent(&mut self, ua: &str) {
+        self.headers.set(UserAgent(ua.to_owned()))
+    }
+
     pub fn get<U: IntoUrl>(&self, url: U) -> Result {
         hyper::Client::new()
             .get(url)
