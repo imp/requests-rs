@@ -6,10 +6,10 @@ mod response;
 
 pub use request::Request;
 pub use response::Response;
+pub use response::Codes;
 
 pub type Result = hyper::Result<Response>;
 pub type Error = hyper::error::Error;
-
 
 pub fn get(url: &str) -> Result {
     Request::default().get(url)
