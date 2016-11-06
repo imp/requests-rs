@@ -1,6 +1,7 @@
 [package]
 authors = ["Cyril Plisko <cyril.plisko@mountall.com>"]
 description = "Rust HTTP client API styled after awesome Python requests - [WORK IN PROGRESS]"
+documentation = "https://docs.rs/requests"
 homepage = "https://gitlab.com/imp/requests-rs"
 keywords = ["http", "rest", "client", "python", "requests"]
 license = "MIT"
