@@ -1,20 +1,20 @@
 [package]
 authors = ["Cyril Plisko <cyril.plisko@mountall.com>"]
 description = "Rust HTTP client API styled after awesome Python requests - [WORK IN PROGRESS]"
+homepage = "https://gitlab.com/imp/requests-rs"
 keywords = ["http", "rest", "client", "python", "requests"]
 license = "MIT"
 name = "requests"
 readme = "README.md"
-repository = "https://github.com/imp/requests-rs.git"
-homepage = "https://github.com/imp/requests-rs"
+repository = "https://gitlab.com/imp/requests-rs.git"
 version = "0.0.23"
 
 [dependencies]
 json = "0.11"
 
 [dependencies.hyper]
-version = "0.9"
 default-features = false
+version = "0.9"
 
 [features]
 default = ["ssl"]
