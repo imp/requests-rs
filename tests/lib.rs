@@ -4,15 +4,19 @@ extern crate requests;
 
 // use requests::Codes;
 use requests::{delete, get, head, post, put};
-use requests::Request;
+use requests::{Request, Response};
+
+fn assert_response_is_ok(response: &Response, url: &str) {
+    assert_eq!(response.url(), url);
+    assert_eq!(response.status_code(), hyper::Ok);
+    assert_eq!(response.reason(), "OK");
+}
 
 #[test]
 fn simple_get() {
     const URL: &'static str = "http://httpbin.org/get";
     let res = get(URL).unwrap();
-    assert_eq!(res.url(), URL);
-    assert_eq!(res.status_code(), hyper::Ok);
-    assert_eq!(res.reason(), "OK");
+    assert_response_is_ok(&res, URL);
     let data = res.json().unwrap();
     println!("{:?}", data);
     assert_eq!(data["url"], URL);
@@ -25,36 +29,28 @@ fn simple_get() {
 fn simple_post() {
     const URL: &'static str = "http://httpbin.org/post";
     let res = post(URL).unwrap();
-    assert_eq!(res.url(), URL);
-    assert_eq!(res.status_code(), hyper::Ok);
-    assert_eq!(res.reason(), "OK");
+    assert_response_is_ok(&res, URL);
 }
 
 #[test]
 fn simple_put() {
     const URL: &'static str = "http://httpbin.org/put";
     let res = put(URL).unwrap();
-    assert_eq!(res.url(), URL);
-    assert_eq!(res.status_code(), hyper::Ok);
-    assert_eq!(res.reason(), "OK");
+    assert_response_is_ok(&res, URL);
 }
 
 #[test]
 fn simple_head() {
     const URL: &'static str = "http://httpbin.org/get";
     let res = head(URL).unwrap();
-    assert_eq!(res.url(), URL);
-    assert_eq!(res.status_code(), hyper::Ok);
-    assert_eq!(res.reason(), "OK");
+    assert_response_is_ok(&res, URL);
 }
 
 #[test]
 fn simple_delete() {
     const URL: &'static str = "http://httpbin.org/delete";
     let res = delete(URL).unwrap();
-    assert_eq!(res.url(), URL);
-    assert_eq!(res.status_code(), hyper::Ok);
-    assert_eq!(res.reason(), "OK");
+    assert_response_is_ok(&res, URL);
 }
 
 #[test]
@@ -64,9 +60,7 @@ fn user_agent() {
                             "\"\n}\n");
     const URL: &'static str = "http://httpbin.org/user-agent";
     let res = get(URL).unwrap();
-    assert_eq!(res.url(), URL);
-    assert_eq!(res.status_code(), hyper::Ok);
-    assert_eq!(res.reason(), "OK");
+    assert_response_is_ok(&res, URL);
     assert_eq!(res.text(), Some(useragent));
 }
 
@@ -77,9 +71,7 @@ fn custom_user_agent() {
     let mut request = Request::new();
     request.user_agent(UA);
     let res = request.get(URL).unwrap();
-    assert_eq!(res.url(), URL);
-    assert_eq!(res.status_code(), hyper::Ok);
-    assert_eq!(res.reason(), "OK");
+    assert_response_is_ok(&res, URL);
     assert!(res.is_json());
 
     let ua = res.json().unwrap();
@@ -91,6 +83,7 @@ fn user_agent_json() {
 
     const URL: &'static str = "http://httpbin.org/user-agent";
     let res = get(URL).unwrap();
+    assert_response_is_ok(&res, URL);
     assert!(res.is_json());
 
     let ua = res.json().unwrap();
@@ -101,12 +94,13 @@ fn user_agent_json() {
 #[test]
 fn content() {
     const URL: &'static str = "http://httpbin.org/headers";
-    let res = get(URL).unwrap();
     let content = concat!("{\n  \"headers\": {\n    \"Host\": \"httpbin.org\",",
                           " \n    \"User-Agent\": \"requests-rs/",
                           env!("CARGO_PKG_VERSION"),
                           "\"\n  }\n}\n");
 
+    let res = get(URL).unwrap();
+    assert_response_is_ok(&res, URL);
     assert_eq!(res.content(), &content.as_bytes());
 }
 
