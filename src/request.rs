@@ -8,6 +8,7 @@ const DEFAULT_USER_AGENT: &'static str = concat!("requests-rs/", env!("CARGO_PKG
 
 pub struct Request {
     headers: Headers,
+    params: Vec<String>,
 }
 
 impl Default for Request {
@@ -20,7 +21,27 @@ impl Default for Request {
 
 impl Request {
     pub fn new() -> Self {
-        Request { headers: Headers::new() }
+        Request {
+            headers: Headers::new(),
+            params: Vec::<String>::new(),
+        }
+    }
+
+    pub fn params<T, U>(&mut self, params: U) -> &mut Self
+        where T: Into<String>,
+              U: IntoIterator<Item = (T, T)>
+    {
+        for (key, value) in params {
+            self.param(key, value);
+        }
+        self
+    }
+
+    pub fn param<T>(&mut self, key: T, value: T) -> &mut Self
+        where T: Into<String>
+    {
+        self.params.push(format!("{}={}", key.into(), value.into()));
+        self
     }
 
     pub fn user_agent(&mut self, ua: &str) {
