@@ -104,6 +104,20 @@ fn content() {
     assert_eq!(res.content(), &content.as_bytes());
 }
 
+#[test]
+fn headers() {
+    use hyper::header::UserAgent;
+
+    const URL: &'static str = "http://httpbin.org/response-headers?User-Agent=requests-rs-test";
+    let res = get(URL).unwrap();
+    assert_response_is_ok(&res, URL);
+    println!("{:?}", res.text());
+    println!("{:?}", res.headers());
+    println!("{:?}", res.headers().get::<UserAgent>());
+    assert_eq!(res.headers().get::<UserAgent>().unwrap(),
+               &UserAgent("requests-rs-test".to_owned()));
+}
+
 macro_rules! status_code_test {
     ($($name:ident: $numeric:expr,)+) => {
         $(#[test]
