@@ -102,13 +102,12 @@ fn user_agent_json() {
 fn content() {
     const URL: &'static str = "http://httpbin.org/headers";
     let res = get(URL).unwrap();
-    let content = vec![123, 10, 32, 32, 34, 104, 101, 97, 100, 101, 114, 115, 34, 58, 32, 123, 10,
-                       32, 32, 32, 32, 34, 72, 111, 115, 116, 34, 58, 32, 34, 104, 116, 116, 112,
-                       98, 105, 110, 46, 111, 114, 103, 34, 44, 32, 10, 32, 32, 32, 32, 34, 85,
-                       115, 101, 114, 45, 65, 103, 101, 110, 116, 34, 58, 32, 34, 114, 101, 113,
-                       117, 101, 115, 116, 115, 45, 114, 115, 47, 48, 46, 48, 46, 50, 51, 34, 10,
-                       32, 32, 125, 10, 125, 10];
-    assert_eq!(res.content(), &content);
+    let content = concat!("{\n  \"headers\": {\n    \"Host\": \"httpbin.org\",",
+                          " \n    \"User-Agent\": \"requests-rs/",
+                          env!("CARGO_PKG_VERSION"),
+                          "\"\n  }\n}\n");
+
+    assert_eq!(res.content(), &content.as_bytes());
 }
 
 macro_rules! status_code_test {
