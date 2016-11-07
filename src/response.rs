@@ -2,7 +2,7 @@ use std::io::Read;
 use std::convert::From;
 use std::str;
 use hyper;
-use hyper::header::{ContentLength, ContentType};
+use hyper::header::{Headers, ContentLength, ContentType};
 use hyper::mime::{Mime, TopLevel, SubLevel};
 use json;
 
@@ -67,5 +67,9 @@ impl<'a> Response {
             Some(&ContentType(Mime(TopLevel::Application, SubLevel::Json, _))) => true,
             _ => false,
         }
+    }
+
+    pub fn headers(&self) -> &Headers {
+        &self.hr.headers
     }
 }
