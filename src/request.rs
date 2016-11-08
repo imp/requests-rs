@@ -27,7 +27,7 @@ impl Request {
         }
     }
 
-    pub fn params<T, U>(&mut self, params: U) -> &mut Self
+    fn params<T, U>(&mut self, params: U) -> &mut Self
         where T: Into<String>,
               U: IntoIterator<Item = (T, T)>
     {
@@ -37,7 +37,7 @@ impl Request {
         self
     }
 
-    pub fn param<T>(&mut self, key: T, value: T) -> &mut Self
+    fn param<T>(&mut self, key: T, value: T) -> &mut Self
         where T: Into<String>
     {
         self.params.push(format!("{}={}", key.into(), value.into()));
