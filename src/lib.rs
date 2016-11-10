@@ -4,12 +4,11 @@
 //! # Quick Start
 //!
 //! ```rust
-//! extern crate hyper;
 //! extern crate requests;
 //! let response = requests::get("http://httpbin.org/get").unwrap();
 //! assert_eq!(response.url(), "http://httpbin.org/get");
 //! assert_eq!(response.reason(), "OK");
-//! assert_eq!(response.status_code(), hyper::Ok);
+//! assert_eq!(response.status_code(), requests::StatusCode::Ok);
 //! let data = response.json().unwrap();
 //! assert_eq!(data["url"], "http://httpbin.org/get");
 //! assert_eq!(data["headers"]["Host"], "httpbin.org");
@@ -25,7 +24,7 @@ mod response;
 
 pub use request::Request;
 pub use response::Response;
-pub use response::Codes;
+pub use response::{Codes, StatusCode};
 
 pub type Result = hyper::Result<Response>;
 pub type Error = hyper::error::Error;

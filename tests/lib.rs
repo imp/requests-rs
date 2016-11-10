@@ -4,11 +4,11 @@ extern crate requests;
 
 // use requests::Codes;
 use requests::{delete, get, head, post, put};
-use requests::{Codes, Request, Response};
+use requests::{Codes, Request, Response, StatusCode};
 
 fn assert_response_is_ok(response: &Response, url: &str) {
     assert_eq!(response.url(), url);
-    assert_eq!(response.status_code(), hyper::Ok);
+    assert_eq!(response.status_code(), StatusCode::Ok);
     assert_eq!(response.reason(), "OK");
 }
 

@@ -6,7 +6,8 @@ use hyper::header::{Headers, ContentLength, ContentType};
 use hyper::mime::{Mime, TopLevel, SubLevel};
 use json;
 
-pub type Codes = hyper::status::StatusCode;
+pub use hyper::status::StatusCode;
+pub type Codes = StatusCode;
 pub type HyperResponse = hyper::client::Response;
 
 #[derive(Debug)]
@@ -47,7 +48,7 @@ impl<'a> Response {
     }
 
     pub fn ok(&self) -> bool {
-        self.hr.status == hyper::Ok
+        self.hr.status == StatusCode::Ok
     }
 
     pub fn text(&'a self) -> Option<&'a str> {
