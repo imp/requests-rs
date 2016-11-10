@@ -4,7 +4,7 @@ extern crate requests;
 
 // use requests::Codes;
 use requests::{delete, get, head, post, put};
-use requests::{Request, Response};
+use requests::{Codes, Request, Response};
 
 fn assert_response_is_ok(response: &Response, url: &str) {
     assert_eq!(response.url(), url);
@@ -124,7 +124,7 @@ macro_rules! status_code_test {
         fn $name() {
             let res = get(&format!("http://httpbin.org/status/{}", $numeric)).unwrap();
             println!("{}", res.text().unwrap());
-            assert_eq!(res.status_code(), hyper::status::StatusCode::from_u16($numeric));
+            assert_eq!(res.status_code(), Codes::from_u16($numeric));
         })+
     }
 }
