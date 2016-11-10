@@ -26,6 +26,15 @@ fn simple_get() {
 }
 
 #[test]
+fn simple_get_string_url() {
+    const URL: &'static str = "http://httpbin.org/get";
+    let res = get(String::from(URL)).unwrap();
+    assert_response_is_ok(&res, URL);
+    let res = get(&String::from(URL)).unwrap();
+    assert_response_is_ok(&res, URL);
+}
+
+#[test]
 fn simple_post() {
     const URL: &'static str = "http://httpbin.org/post";
     let res = post(URL).unwrap();

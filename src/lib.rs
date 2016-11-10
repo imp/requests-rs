@@ -30,22 +30,22 @@ pub use response::Codes;
 pub type Result = hyper::Result<Response>;
 pub type Error = hyper::error::Error;
 
-pub fn get(url: &str) -> Result {
-    Request::default().get(url)
+pub fn get<T: AsRef<str>>(url: T) -> Result {
+    Request::default().get(url.as_ref())
 }
 
-pub fn post(url: &str) -> Result {
-    Request::default().post(url)
+pub fn post<T: AsRef<str>>(url: T) -> Result {
+    Request::default().post(url.as_ref())
 }
 
-pub fn put(url: &str) -> Result {
-    Request::default().put(url)
+pub fn put<T: AsRef<str>>(url: T) -> Result {
+    Request::default().put(url.as_ref())
 }
 
-pub fn head(url: &str) -> Result {
-    Request::default().head(url)
+pub fn head<T: AsRef<str>>(url: T) -> Result {
+    Request::default().head(url.as_ref())
 }
 
-pub fn delete(url: &str) -> Result {
-    Request::default().delete(url)
+pub fn delete<T: AsRef<str>>(url: T) -> Result {
+    Request::default().delete(url.as_ref())
 }
