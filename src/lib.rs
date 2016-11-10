@@ -1,3 +1,22 @@
+//! requests - HTTP client library with simple API.\
+//! If you have used Python requests module you will find the API familiar.
+//!
+//! # Quick Start
+//!
+//! ```rust
+//! extern crate hyper;
+//! extern crate requests;
+//! let response = requests::get("http://httpbin.org/get").unwrap();
+//! assert_eq!(response.url(), "http://httpbin.org/get");
+//! assert_eq!(response.reason(), "OK");
+//! assert_eq!(response.status_code(), hyper::Ok);
+//! let data = response.json().unwrap();
+//! assert_eq!(data["url"], "http://httpbin.org/get");
+//! assert_eq!(data["headers"]["Host"], "httpbin.org");
+//! assert_eq!(data["headers"]["User-Agent"],
+//!            concat!("requests-rs/", env!("CARGO_PKG_VERSION")));
+//! ```
+
 extern crate hyper;
 extern crate json;
 
