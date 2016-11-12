@@ -8,7 +8,7 @@ license = "MIT"
 name = "requests"
 readme = "README.md"
 repository = "https://gitlab.com/imp/requests-rs.git"
-version = "0.0.24"
+version = "0.0.25"
 
 [dependencies]
 json = "0.11"
