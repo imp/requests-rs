@@ -16,6 +16,8 @@
 //!            concat!("requests-rs/", env!("CARGO_PKG_VERSION")));
 //! ```
 
+#[macro_use]
+extern crate mime;
 extern crate hyper;
 extern crate json;
 

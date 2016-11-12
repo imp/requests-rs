@@ -127,6 +127,17 @@ fn headers() {
                &UserAgent("requests-rs-test".to_owned()));
 }
 
+#[test]
+fn accept_json() {
+    const URL: &'static str = "http://httpbin.org/headers";
+    let res = Request::json().get(URL).unwrap();
+    assert_response_is_ok(&res, URL);
+    assert!(res.is_json());
+    let data = res.json().unwrap();
+    println!("{:?}", data);
+    assert_eq!(data["headers"]["Accept"], "application/json");
+}
+
 macro_rules! status_code_test {
     ($($name:ident: $numeric:expr,)+) => {
         $(#[test]
