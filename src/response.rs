@@ -59,7 +59,7 @@ impl<'a> Response {
         &self.content
     }
 
-    pub fn json(&self) -> json::JsonResult<json::JsonValue> {
+    pub fn json(&self) -> json::Result<json::JsonValue> {
         self.text().map(|t| json::parse(t)).unwrap()
     }
 
