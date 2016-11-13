@@ -5,6 +5,8 @@ use super::Response;
 use super::Result;
 
 const DEFAULT_USER_AGENT: &'static str = concat!("requests-rs/", env!("CARGO_PKG_VERSION"));
+
+#[derive(Debug)]
 pub struct Request {
     headers: Headers,
 }
