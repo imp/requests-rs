@@ -14,13 +14,12 @@ version = "0.0.25"
 mime = "0.2.2"
 
 [dependencies.hyper]
-default-features = false
-version = "0.9"
+version = "0.10"
 
 [dependencies.json]
 version = "0.11"
 
 
 [features]
-default = ["ssl"]
-ssl = ["hyper/ssl"]
+#default = ["ssl"]
+#ssl = ["hyper/ssl"]
