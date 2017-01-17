@@ -4,7 +4,6 @@ use std::str;
 use hyper;
 use hyper::header::{Headers, ContentLength, ContentType};
 use hyper::mime::{Mime, TopLevel, SubLevel};
-use json;
 
 pub use hyper::status::StatusCode;
 pub type Codes = StatusCode;
@@ -57,10 +56,6 @@ impl<'a> Response {
 
     pub fn content(&'a self) -> &'a Vec<u8> {
         &self.content
-    }
-
-    pub fn json(&self) -> json::Result<json::JsonValue> {
-        self.text().map(|t| json::parse(t)).unwrap()
     }
 
     pub fn is_json(&self) -> bool {

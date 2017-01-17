@@ -5,6 +5,7 @@ extern crate requests;
 // use requests::Codes;
 use requests::{delete, get, head, post, put};
 use requests::{Codes, Request, Response, StatusCode};
+use requests::ToJson;
 
 fn assert_response_is_ok(response: &Response, url: &str) {
     assert_eq!(response.url(), url);
