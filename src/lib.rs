@@ -24,6 +24,7 @@
 #[macro_use]
 extern crate mime;
 extern crate hyper;
+#[cfg(feature = "with_json")]
 extern crate json;
 
 mod request;

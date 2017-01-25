@@ -1,6 +1,7 @@
 extern crate hyper;
-extern crate json;
 extern crate requests;
+#[cfg(feature = "with_json")]
+extern crate json;
 
 // use requests::Codes;
 use requests::{delete, get, head, post, put};
@@ -128,6 +129,7 @@ fn headers() {
                &UserAgent("requests-rs-test".to_owned()));
 }
 
+#[cfg(feature = "with_json")]
 #[test]
 fn accept_json() {
     const URL: &'static str = "http://httpbin.org/headers";

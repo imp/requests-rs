@@ -17,9 +17,12 @@ mime = "0.2.2"
 version = "0.10"
 
 [dependencies.json]
+optional = true
 version = "0.11"
 
 
 [features]
 #default = ["ssl"]
 #ssl = ["hyper/ssl"]
+default = ["with_json"]
+with_json = ["json"]

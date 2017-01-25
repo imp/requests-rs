@@ -1,3 +1,4 @@
+#[cfg(feature = "with_json")]
 use json;
 
 use response;
@@ -7,6 +8,7 @@ pub trait ToJson {
     fn json(&self) -> Self::ResultType;
 }
 
+#[cfg(feature = "with_json")]
 impl ToJson for response::Response {
     type ResultType = json::Result<json::JsonValue>;
     fn json(&self) -> <response::Response as ToJson>::ResultType {
