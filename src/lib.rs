@@ -26,6 +26,8 @@ extern crate hyper;
 extern crate hyper_native_tls;
 #[cfg(feature = "with_json")]
 extern crate json;
+#[cfg(feature = "with_serde")]
+extern crate serde_json;
 
 mod request;
 mod response;
