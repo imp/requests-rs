@@ -1,5 +1,6 @@
 [package]
 authors = ["Cyril Plisko <cyril.plisko@mountall.com>"]
+categories = ["web-programming::http-client"]
 description = "Rust HTTP client API styled after awesome Python requests - [WORK IN PROGRESS]"
 documentation = "https://docs.rs/requests"
 homepage = "https://gitlab.com/imp/requests-rs"
@@ -9,6 +10,9 @@ name = "requests"
 readme = "README.md"
 repository = "https://gitlab.com/imp/requests-rs.git"
 version = "0.0.25"
+
+[badges]
+travis-ci = { repository = "imp/requests-rs" }
 
 [dependencies]
 mime = "0.2.2"
