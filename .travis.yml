@@ -6,3 +6,7 @@ rust:
 os:
     - linux
     - osx
+
+script:
+    cargo test
+    cargo test --no-default-features --features "ssl with_serde"
