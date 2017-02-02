@@ -16,13 +16,15 @@ mime = "0.2.2"
 [dependencies.hyper]
 version = "0.10"
 
+[dependencies.hyper-native-tls]
+optional = true
+version = "0.2"
+
 [dependencies.json]
 optional = true
 version = "0.11"
 
-
 [features]
-#default = ["ssl"]
-#ssl = ["hyper/ssl"]
-default = ["with_json"]
+ssl = ["hyper-native-tls"]
 with_json = ["json"]
+default = ["ssl", "with_json"]
