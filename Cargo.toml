@@ -13,6 +13,7 @@ version = "0.0.26"
 
 [badges]
 travis-ci = { repository = "imp/requests-rs" }
+gitlab = { repository = "imp/requests-rs" }
 
 [dependencies]
 mime = "0.2.2"
