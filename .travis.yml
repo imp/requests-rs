@@ -9,9 +9,9 @@ os:
 
 before_script:
     - |
-        pip install 'travis-cargo<0.2' --user &&
-        export PATH=$HOME/.local/bin:$PATH &&
-        export PATH=$HOME/Library/Python/$(python -V 2>&1 | cut -d' ' -f2)/bin:$PATH &&
+        pip install 'travis-cargo<0.2' --user
+        if [[ -e ~/Library/Python/2.7/bin ]]; then export PATH=~/Library/Python/2.7/bin:$PATH; fi &&
+        if [[ -e ~/.local/bin ]]; then export PATH=~/.local/bin:$PATH; fi &&
         export TRAVIS_CARGO_NIGHTLY_FEATURE=""
 
 script:
