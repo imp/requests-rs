@@ -9,7 +9,7 @@ license = "MIT"
 name = "requests"
 readme = "README.md"
 repository = "https://gitlab.com/imp/requests-rs.git"
-version = "0.0.27"
+version = "0.0.28"
 
 [badges]
 travis-ci = { repository = "imp/requests-rs" }
