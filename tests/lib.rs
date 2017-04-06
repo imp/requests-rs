@@ -114,13 +114,18 @@ fn user_agent_json() {
 #[test]
 fn content() {
     const URL: &'static str = "http://httpbin.org/headers";
-    let content = concat!("{\n  \"headers\": {\n    \"Host\": \"httpbin.org\",",
-                          " \n    \"User-Agent\": \"requests-rs/",
-                          env!("CARGO_PKG_VERSION"),
-                          "\"\n  }\n}\n");
+    let content = concat!("{\n",
+                          "  \"headers\": {\n",
+                          "    \"Connection\": \"close\", \n",
+                          "    \"Host\": \"httpbin.org\", \n",
+                          "    \"User-Agent\": \"requests-rs/", env!("CARGO_PKG_VERSION"), "\"\n",
+                          "  }\n",
+                          "}\n");
 
     let res = get(URL).unwrap();
     assert_response_is_ok(&res, URL);
+    println!("{}", res.text().unwrap());
+    println!("{}", content);
     assert_eq!(res.content(), &content.as_bytes());
 }
 
