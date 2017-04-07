@@ -1,22 +1,25 @@
 use std::io::Read;
 use std::convert::From;
 use std::str;
-use hyper;
-use hyper::header::{Headers, ContentLength, ContentType};
 
-pub use hyper::status::StatusCode;
+use reqwest;
+use reqwest::header::{Headers, ContentLength, ContentType};
+use serde::de::DeserializeOwned;
+use serde_json;
+
+pub use reqwest::StatusCode;
 pub type Codes = StatusCode;
-pub type HyperResponse = hyper::client::Response;
+pub type ReqwestResponse = reqwest::Response;
 
 #[derive(Debug)]
 pub struct Response {
     content: Vec<u8>,
-    inner: HyperResponse,
+    inner: ReqwestResponse,
 }
 
-impl From<HyperResponse> for Response {
-    fn from(mut raw: HyperResponse) -> Self {
-        let mut content = match raw.headers.get::<ContentLength>() {
+impl From<ReqwestResponse> for Response {
+    fn from(mut raw: ReqwestResponse) -> Self {
+        let mut content = match raw.headers().get::<ContentLength>() {
             Some(&ContentLength(length)) => Vec::with_capacity(length as usize),
             None => Vec::new(),
         };
@@ -34,22 +37,22 @@ impl From<HyperResponse> for Response {
 
 impl<'a> Response {
     pub fn url(&self) -> &str {
-        self.inner.url.as_str()
+        self.inner.url().as_str()
     }
 
     pub fn status_code(&self) -> Codes {
-        self.inner.status
+        self.inner.status()
     }
 
     pub fn reason(&self) -> &str {
         self.inner
-            .status
+            .status()
             .canonical_reason()
             .unwrap_or("UNAVAILABLE")
     }
 
     pub fn ok(&self) -> bool {
-        self.inner.status == StatusCode::Ok
+        self.inner.status() == StatusCode::Ok
     }
 
     pub fn text(&'a self) -> Option<&'a str> {
@@ -61,10 +64,16 @@ impl<'a> Response {
     }
 
     pub fn is_json(&self) -> bool {
-        self.inner.headers.get::<ContentType>() == Some(&ContentType::json())
+        self.inner.headers().get::<ContentType>() == Some(&ContentType::json())
     }
 
     pub fn headers(&self) -> &Headers {
-        &self.inner.headers
+        self.inner.headers()
+    }
+
+    pub fn json<T: DeserializeOwned>(&self) -> serde_json::Result<T> {
+        //self.inner.json()
+        let text = self.text().unwrap();
+        serde_json::from_str(text)
     }
 }

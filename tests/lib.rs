@@ -1,14 +1,12 @@
-extern crate hyper;
 extern crate requests;
-#[cfg(feature = "with_json")]
-extern crate json;
+extern crate reqwest;
+extern crate serde_json;
 
-// use requests::Codes;
 use requests::{delete, get, head, post, put};
 use requests::{Codes, Request, Response, StatusCode};
-use requests::ToJson;
 
 fn assert_response_is_ok(response: &Response, url: &str) {
+    println!("{:?}", response);
     assert_eq!(response.url(), url);
     assert_eq!(response.status_code(), StatusCode::Ok);
     assert_eq!(response.reason(), "OK");
@@ -19,7 +17,8 @@ fn simple_get() {
     const URL: &'static str = "http://httpbin.org/get";
     let res = get(URL).unwrap();
     assert_response_is_ok(&res, URL);
-    let data = res.json().unwrap();
+    println!("{:?}", res.text());
+    let data = res.json::<serde_json::Value>().unwrap();
     println!("{:?}", data);
     assert_eq!(data["url"], URL);
     assert_eq!(data["headers"]["Host"], "httpbin.org");
@@ -94,7 +93,7 @@ fn custom_user_agent() {
     assert_response_is_ok(&res, URL);
     assert!(res.is_json());
 
-    let ua = res.json().unwrap();
+    let ua = res.json::<serde_json::Value>().unwrap();
     assert_eq!(ua["user-agent"], UA);
 }
 
@@ -106,7 +105,7 @@ fn user_agent_json() {
     assert_response_is_ok(&res, URL);
     assert!(res.is_json());
 
-    let ua = res.json().unwrap();
+    let ua = res.json::<serde_json::Value>().unwrap();
     assert_eq!(ua["user-agent"],
                concat!("requests-rs/", env!("CARGO_PKG_VERSION")));
 }
@@ -116,6 +115,8 @@ fn content() {
     const URL: &'static str = "http://httpbin.org/headers";
     let content = concat!("{\n",
                           "  \"headers\": {\n",
+                          "    \"Accept\": \"*/*\", \n",
+                          "    \"Accept-Encoding\": \"gzip\", \n",
                           "    \"Connection\": \"close\", \n",
                           "    \"Host\": \"httpbin.org\", \n",
                           "    \"User-Agent\": \"requests-rs/", env!("CARGO_PKG_VERSION"), "\"\n",
@@ -131,7 +132,7 @@ fn content() {
 
 #[test]
 fn headers() {
-    use hyper::header::UserAgent;
+    use reqwest::header::UserAgent;
 
     const URL: &'static str = "http://httpbin.org/response-headers?User-Agent=requests-rs-test";
     let res = get(URL).unwrap();
@@ -140,17 +141,16 @@ fn headers() {
     println!("{:?}", res.headers());
     println!("{:?}", res.headers().get::<UserAgent>());
     assert_eq!(res.headers().get::<UserAgent>().unwrap(),
-               &UserAgent("requests-rs-test".to_owned()));
+               &UserAgent::new("requests-rs-test".to_owned()));
 }
 
-#[cfg(feature = "with_json")]
 #[test]
 fn accept_json() {
     const URL: &'static str = "http://httpbin.org/headers";
     let res = Request::json().get(URL).unwrap();
     assert_response_is_ok(&res, URL);
     assert!(res.is_json());
-    let data = res.json().unwrap();
+    let data = res.json::<serde_json::Value>().unwrap();
     println!("{:?}", data);
     assert_eq!(data["headers"]["Accept"], "application/json");
 }
@@ -161,7 +161,7 @@ macro_rules! status_code_test {
         fn $name() {
             let res = get(&format!("http://httpbin.org/status/{}", $numeric)).unwrap();
             println!("{}", res.text().unwrap());
-            assert_eq!(res.status_code(), Codes::from_u16($numeric));
+            assert_eq!(res.status_code(), Codes::try_from($numeric).unwrap());
         })+
     }
 }

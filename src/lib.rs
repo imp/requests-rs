@@ -5,7 +5,7 @@
 //!
 //! ```rust
 //! extern crate requests;
-//! use requests::ToJson;
+//! extern crate serde_json;
 //!
 //! fn main() {
 //!     let response = requests::get("http://httpbin.org/get").unwrap();
@@ -13,7 +13,7 @@
 //!     assert_eq!(response.reason(), "OK");
 //!     assert_eq!(response.status_code(), requests::StatusCode::Ok);
 //!
-//!     let data = response.json().unwrap();
+//!     let data = response.json::<serde_json::Value>().unwrap();
 //!     assert_eq!(data["url"], "http://httpbin.org/get");
 //!     assert_eq!(data["headers"]["Host"], "httpbin.org");
 //!     assert_eq!(data["headers"]["User-Agent"],
@@ -21,23 +21,19 @@
 //! }
 //! ```
 
-extern crate hyper;
-#[cfg(feature = "ssl")]
-extern crate hyper_native_tls;
-#[cfg(feature = "with_json")]
-extern crate json;
+extern crate reqwest;
+extern crate serde;
+extern crate serde_json;
 
 mod request;
 mod response;
-mod tojson;
 
 pub use request::Request;
 pub use response::Response;
 pub use response::{Codes, StatusCode};
-pub use tojson::ToJson;
 
-pub type Result = hyper::Result<Response>;
-pub type Error = hyper::error::Error;
+pub type Result = reqwest::Result<Response>;
+pub type Error = reqwest::Error;
 
 pub fn get<T: AsRef<str>>(url: T) -> Result {
     Request::default().get(url.as_ref())

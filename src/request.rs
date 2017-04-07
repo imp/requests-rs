@@ -1,26 +1,11 @@
-use hyper::client::{Client, IntoUrl};
-use hyper::header::{Headers, Accept, UserAgent};
-use hyper::net::HttpsConnector;
-use hyper::Url;
-#[cfg(feature = "ssl")]
-use hyper_native_tls::NativeTlsClient;
+use reqwest;
+use reqwest::IntoUrl;
+use reqwest::header::{Headers, Accept, UserAgent};
 
 use super::Response;
 use super::Result;
 
 const DEFAULT_USER_AGENT: &'static str = concat!("requests-rs/", env!("CARGO_PKG_VERSION"));
-
-
-fn get_hyper_client(url: &Url) -> Client {
-    if url.scheme() == "https" {
-        let ssl = NativeTlsClient::new().unwrap();
-        let connector = HttpsConnector::new(ssl);
-        Client::with_connector(connector)
-    } else {
-        Client::new()
-    }
-
-}
 
 #[derive(Debug)]
 pub struct Request {
@@ -48,49 +33,44 @@ impl Request {
     }
 
     pub fn user_agent(&mut self, ua: &str) {
-        self.headers.set(UserAgent(ua.to_owned()))
+        self.headers.set(UserAgent::new(ua.to_owned()))
     }
 
     pub fn get<U: IntoUrl>(&self, url: U) -> Result {
-        let url = url.into_url()?;
-        get_hyper_client(&url)
-            .get(url)
+        reqwest::Client::new()?
+            .get(url)?
             .headers(self.headers.clone())
             .send()
             .map(Response::from)
     }
 
     pub fn post<U: IntoUrl>(&self, url: U) -> Result {
-        let url = url.into_url()?;
-        get_hyper_client(&url)
-            .post(url)
+        reqwest::Client::new()?
+            .post(url)?
             .headers(self.headers.clone())
             .send()
             .map(Response::from)
     }
 
     pub fn put<U: IntoUrl>(&self, url: U) -> Result {
-        let url = url.into_url()?;
-        get_hyper_client(&url)
-            .put(url)
+        reqwest::Client::new()?
+            .put(url)?
             .headers(self.headers.clone())
             .send()
             .map(Response::from)
     }
 
     pub fn head<U: IntoUrl>(&self, url: U) -> Result {
-        let url = url.into_url()?;
-        get_hyper_client(&url)
-            .head(url)
+        reqwest::Client::new()?
+            .head(url)?
             .headers(self.headers.clone())
             .send()
             .map(Response::from)
     }
 
     pub fn delete<U: IntoUrl>(&self, url: U) -> Result {
-        let url = url.into_url()?;
-        get_hyper_client(&url)
-            .delete(url)
+        reqwest::Client::new()?
+            .delete(url)?
             .headers(self.headers.clone())
             .send()
             .map(Response::from)
