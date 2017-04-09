@@ -11,7 +11,7 @@ pub type HyperResponse = hyper::client::Response;
 #[derive(Debug)]
 pub struct Response {
     content: Vec<u8>,
-    hr: HyperResponse,
+    inner: HyperResponse,
 }
 
 impl From<HyperResponse> for Response {
@@ -27,26 +27,26 @@ impl From<HyperResponse> for Response {
 
         Response {
             content: content,
-            hr: raw,
+            inner: raw,
         }
     }
 }
 
 impl<'a> Response {
     pub fn url(&self) -> &str {
-        self.hr.url.as_str()
+        self.inner.url.as_str()
     }
 
     pub fn status_code(&self) -> Codes {
-        self.hr.status
+        self.inner.status
     }
 
     pub fn reason(&self) -> &str {
-        self.hr.status.canonical_reason().unwrap_or("UNAVAILABLE")
+        self.inner.status.canonical_reason().unwrap_or("UNAVAILABLE")
     }
 
     pub fn ok(&self) -> bool {
-        self.hr.status == StatusCode::Ok
+        self.inner.status == StatusCode::Ok
     }
 
     pub fn text(&'a self) -> Option<&'a str> {
@@ -58,10 +58,10 @@ impl<'a> Response {
     }
 
     pub fn is_json(&self) -> bool {
-        self.hr.headers.get::<ContentType>() == Some(&ContentType::json())
+        self.inner.headers.get::<ContentType>() == Some(&ContentType::json())
     }
 
     pub fn headers(&self) -> &Headers {
-        &self.hr.headers
+        &self.inner.headers
     }
 }
