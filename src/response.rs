@@ -42,7 +42,10 @@ impl<'a> Response {
     }
 
     pub fn reason(&self) -> &str {
-        self.inner.status.canonical_reason().unwrap_or("UNAVAILABLE")
+        self.inner
+            .status
+            .canonical_reason()
+            .unwrap_or("UNAVAILABLE")
     }
 
     pub fn ok(&self) -> bool {
