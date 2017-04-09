@@ -16,9 +16,7 @@ travis-ci = { repository = "imp/requests-rs" }
 gitlab = { repository = "imp/requests-rs" }
 
 [dependencies]
-
-[dependencies.hyper]
-version = "0.10"
+hyper = "0.10"
 
 [dependencies.hyper-native-tls]
 optional = true
