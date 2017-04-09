@@ -21,8 +21,6 @@
 //! }
 //! ```
 
-#[macro_use]
-extern crate mime;
 extern crate hyper;
 #[cfg(feature = "ssl")]
 extern crate hyper_native_tls;

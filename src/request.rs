@@ -1,5 +1,5 @@
 use hyper::client::{Client, IntoUrl};
-use hyper::header::{Headers, Accept, UserAgent, qitem};
+use hyper::header::{Headers, Accept, UserAgent};
 use hyper::net::HttpsConnector;
 use hyper::Url;
 #[cfg(feature = "ssl")]
@@ -43,7 +43,7 @@ impl Request {
     pub fn json() -> Self {
         let mut request = Request::new();
         request.user_agent(DEFAULT_USER_AGENT);
-        request.headers.set(Accept(vec![qitem(mime!(Application / Json))]));
+        request.headers.set(Accept::json());
         request
     }
 

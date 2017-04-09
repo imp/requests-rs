@@ -3,7 +3,6 @@ use std::convert::From;
 use std::str;
 use hyper;
 use hyper::header::{Headers, ContentLength, ContentType};
-use hyper::mime::{Mime, TopLevel, SubLevel};
 
 pub use hyper::status::StatusCode;
 pub type Codes = StatusCode;
@@ -59,10 +58,7 @@ impl<'a> Response {
     }
 
     pub fn is_json(&self) -> bool {
-        match self.hr.headers.get::<ContentType>() {
-            Some(&ContentType(Mime(TopLevel::Application, SubLevel::Json, _))) => true,
-            _ => false,
-        }
+        self.hr.headers.get::<ContentType>() == Some(&ContentType::json())
     }
 
     pub fn headers(&self) -> &Headers {
