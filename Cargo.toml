@@ -16,7 +16,7 @@ travis-ci = { repository = "imp/requests-rs" }
 gitlab = { repository = "imp/requests-rs" }
 
 [dependencies]
-reqwest = "0.7"
+reqwest = "0.8"
 serde = "1.0"
 serde_json = "1.0"
 

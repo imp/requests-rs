@@ -37,40 +37,40 @@ impl Request {
     }
 
     pub fn get<U: IntoUrl>(&self, url: U) -> Result {
-        reqwest::Client::new()?
-            .get(url)?
+        reqwest::Client::new()
+            .get(url)
             .headers(self.headers.clone())
             .send()
             .map(Response::from)
     }
 
     pub fn post<U: IntoUrl>(&self, url: U) -> Result {
-        reqwest::Client::new()?
-            .post(url)?
+        reqwest::Client::new()
+            .post(url)
             .headers(self.headers.clone())
             .send()
             .map(Response::from)
     }
 
     pub fn put<U: IntoUrl>(&self, url: U) -> Result {
-        reqwest::Client::new()?
-            .put(url)?
+        reqwest::Client::new()
+            .put(url)
             .headers(self.headers.clone())
             .send()
             .map(Response::from)
     }
 
     pub fn head<U: IntoUrl>(&self, url: U) -> Result {
-        reqwest::Client::new()?
-            .head(url)?
+        reqwest::Client::new()
+            .head(url)
             .headers(self.headers.clone())
             .send()
             .map(Response::from)
     }
 
     pub fn delete<U: IntoUrl>(&self, url: U) -> Result {
-        reqwest::Client::new()?
-            .delete(url)?
+        reqwest::Client::new()
+            .delete(url)
             .headers(self.headers.clone())
             .send()
             .map(Response::from)
