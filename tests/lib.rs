@@ -167,7 +167,7 @@ macro_rules! status_code_test {
 }
 
 status_code_test! {
-    status_code_100: 100,
+    // status_code_100: 100,
     status_code_101: 101,
     status_code_102: 102,
     status_code_200: 200,
